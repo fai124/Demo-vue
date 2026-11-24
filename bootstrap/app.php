@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Middleware\HandleAppearance;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -26,9 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
         Fortify::ignoreRoutes();
         $middleware->redirectGuestsTo(fn () => route('login'));
 
-        $middleware->web(append: [
-            HandleAppearance::class,
-        ]);
+        $middleware->web(append: []);
 
         $middleware->api(append: [
             EnsureFrontendRequestsAreStateful::class,

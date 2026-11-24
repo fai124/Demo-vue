@@ -10,13 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
-    public function booking_add()
-    {
-        $rooms = Room::all();
-
-        return response()->json($rooms);
-    }
-
     public function booking_room($id)
     {
         $room = Room::find($id);

@@ -8,15 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class RoomController extends Controller
 {
-    public function room_add()
-    {
-        if (! Auth::user() || Auth::user()->role !== 'admin') {
-            return response()->json(['errors' => ['role' => ['Доступ запрещен']]]);
-        }
-
-        return response()->json(['message' => 'ok']);
-    }
-
     public function room_addform(RoomRequest $request)
     {
         if (Auth::user()->role !== 'admin') {

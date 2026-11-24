@@ -35,7 +35,7 @@
 import HeaderComponent from '../components/HeaderComponent.vue';
 export default {
     name: 'BookingCreate',
-    props: ['datasend', 'changePage', 'changeToken', 'user', 'isAdmin', 'storage', 'userInfo'],
+    props: ['datasend', 'changePage', 'changeToken', 'user', 'isAdmin', 'PUBLIC', 'userInfo'],
     data() {
         return {
             rooms: [],
@@ -56,16 +56,18 @@ export default {
         },
         createBooking() {
             let formdata = new FormData();
-            formdata.append('room_id', this.room_id);
-            formdata.append('date', this.date);
-            formdata.append('payment', this.payment);
-            this.datasend('booking/store', 'POST', formdata).then((result) => {
-                if (result.errors) {
-                    this.errors = result.errors;
-                } else {
-                    this.changePage('Dashboard');
-                }
-            });
+            if (this.room_id) formdata.append('room_id', this.room_id);
+            if (this.date) formdata.append('date', this.date);
+            if (this.payment) formdata.append('payment', this.payment);
+            this.datasend('booking/store', 'POST', formdata)
+                .then((result) => {
+                    console.log(result);
+                    if (result.errors) {
+                        this.errors = result.errors;
+                    } else {
+                        this.changePage('Dashboard');
+                    }
+                });
         },
         logout() {
             this.$emit('logout');

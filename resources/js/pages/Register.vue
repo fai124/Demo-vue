@@ -31,7 +31,7 @@
 
                 <div class="error-message" v-if="errors.system">{{ errors.system.join('. ') }}</div>
 
-                <button type="submit" :disabled="loading">Зарегистрироваться</button>
+                <button type="submit">Зарегистрироваться</button>
             </form>
             <p class="link">Уже зарегистрированы? <a href="" @click.prevent="changePage('Login')">Войти</a></p>
         </div>
@@ -56,25 +56,24 @@ export default {
     methods: {
         register() {
             this.errors = {};
-            this.loading = true;
             let formdata = new FormData();
-            formdata.append('login', this.login);
-            formdata.append('password', this.password);
-            formdata.append('FIO', this.FIO);
-            formdata.append('number', this.number);
-            formdata.append('email', this.email);
-            this.datasend('register', 'POST', formdata).then((result) => {
-                this.loading = false;
-                if (result.errors) {
-                    for (const key in result.errors) {
-                        this.errors[key] = Array.isArray(result.errors[key]) ? result.errors[key] : [result.errors[key]];
+            if (this.login) formdata.append('login', this.login);
+            if (this.password) formdata.append('password', this.password);
+            if (this.FIO) formdata.append('FIO', this.FIO);
+            if (this.number) formdata.append('number', this.number);
+            if (this.email) formdata.append('email', this.email);
+
+            this.datasend('register', 'POST', formdata)
+                .then((result) => {
+                    console.log(result);
+                    if (result.errors) {
+                        this.errors = result.errors;
                     }
-                }
-                if (result.token) {
-                    this.changeToken(result.token);
-                    this.changePage('Dashboard');
-                }
-            });
+                    if (result.token) {
+                        this.changeToken(result.token);
+                        this.changePage('Dashboard');
+                    }
+                });
         },
     },
 };

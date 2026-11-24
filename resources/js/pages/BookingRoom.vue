@@ -5,7 +5,7 @@
         <div class="container">
             <div class="room-detail" v-if="room">
                 <h2>{{ room.name }}</h2>
-                <img :src="storage + room.image" :alt="room.name" class="room-detail-img" />
+                <img :src="PUBLIC + room.image" :alt="room.name" class="room-detail-img" />
                 <p>{{ room.description }}</p>
 
                 <form @submit.prevent="createBooking">
@@ -55,16 +55,18 @@ export default {
         },
         createBooking() {
             let formdata = new FormData();
-            formdata.append('room_id', this.room.id);
-            formdata.append('date', this.date);
-            formdata.append('payment', this.payment);
-            this.datasend('booking/store', 'POST', formdata).then((result) => {
-                if (result.errors) {
-                    this.errors = result.errors;
-                } else {
-                    this.changePage('Dashboard');
-                }
-            });
+            if (this.room) formdata.append('room_id', this.room.id);
+            if (this.date) formdata.append('date', this.date);
+            if (this.payment) formdata.append('payment', this.payment);
+            this.datasend('booking/store', 'POST', formdata)
+                .then((result) => {
+                    console.log(result);
+                    if (result.errors) {
+                        this.errors = result.errors;
+                    } else {
+                        this.changePage('Dashboard');
+                    }
+                });
         },
         logout() {
             this.$emit('logout');

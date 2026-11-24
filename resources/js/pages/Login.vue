@@ -19,7 +19,7 @@
 
                 <div class="error-message" v-if="errors.system">{{ errors.system.join('. ') }}</div>
 
-                <button type="submit" :disabled="loading">Войти</button>
+                <button type="submit">Войти</button>
             </form>
             <p class="link">Ещё не зарегистрированы? <a href="" @click.prevent="changePage('Register')">Регистрация</a></p>
         </div>
@@ -41,22 +41,21 @@ export default {
     methods: {
         doLogin() {
             this.errors = {};
-            this.loading = true;
             let formdata = new FormData();
-            formdata.append('login', this.login);
-            formdata.append('password', this.password);
-            this.datasend('login', 'POST', formdata).then((result) => {
-                this.loading = false;
-                if (result.errors) {
-                    for (const key in result.errors) {
-                        this.errors[key] = Array.isArray(result.errors[key]) ? result.errors[key] : [result.errors[key]];
+            if (this.login) formdata.append('login', this.login);
+            if (this.password) formdata.append('password', this.password);
+
+            this.datasend('login', 'POST', formdata)
+                .then((result) => {
+                    console.log(result);
+                    if (result.errors) {
+                        this.errors = result.errors;
                     }
-                }
-                if (result.token) {
-                    this.changeToken(result.token);
-                    this.changePage('Dashboard');
-                }
-            });
+                    if (result.token) {
+                        this.changeToken(result.token);
+                        this.changePage('Dashboard');
+                    }
+                });
         },
     },
 };

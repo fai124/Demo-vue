@@ -23,10 +23,5 @@
 export default {
     name: 'HeaderComponent',
     props: ['datasend', 'changeToken', 'user', 'isAdmin', 'logout', 'changePage', 'userInfo'],
-    data() {
-        return {};
-    },
-    mounted() {},
-    methods: {},
 };
 </script>

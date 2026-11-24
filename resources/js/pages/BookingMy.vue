@@ -20,7 +20,7 @@
                     <tr v-for="(booking, index) in bookings" :key="booking.id">
                         <td>{{ index + 1 }}</td>
                         <td>{{ booking.room.name }}</td>
-                        <td>{{ booking.date }}</td>
+                        <td>{{ formatDate(booking.date) }}</td>
                         <td>{{ booking.payment == 'cash' ? 'Наличные' : 'СБП' }}</td>
                         <td>{{ booking.status }}</td>
                         <td>
@@ -54,12 +54,11 @@
 import HeaderComponent from '../components/HeaderComponent.vue';
 export default {
     name: 'BookingMy',
-    props: ['datasend', 'changePage', 'changeToken', 'user', 'isAdmin', 'storage', 'userInfo'],
+    props: ['datasend', 'changePage', 'changeToken', 'user', 'isAdmin', 'PUBLIC', 'userInfo'],
     data() {
         return {
             bookings: [],
             reviewText: '',
-            reviewBookingId: null,
         };
     },
     mounted() {
@@ -73,14 +72,23 @@ export default {
         },
         review(booking) {
             let formdata = new FormData();
-            formdata.append('comment', this.reviewText);
-            this.datasend('booking/' + booking.id + '/review', 'POST', formdata).then(() => {
-                this.reviewText = '';
-                this.getBookings();
-            });
+            if (this.reviewText) formdata.append('comment', this.reviewText);
+            this.datasend('booking/' + booking.id + '/review', 'POST', formdata)
+                .then(() => {
+                    this.reviewText = '';
+                    this.getBookings();
+                });
         },
         logout() {
             this.$emit('logout');
+        },
+        formatDate(dateStr) {
+            if (!dateStr) return '';
+            const d = new Date(dateStr);
+            const day = String(d.getDate()).padStart(2, '0');
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const year = d.getFullYear();
+            return day + '.' + month + '.' + year;
         },
     },
     components: { HeaderComponent },

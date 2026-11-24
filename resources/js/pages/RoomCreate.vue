@@ -30,7 +30,7 @@
 import HeaderComponent from '../components/HeaderComponent.vue';
 export default {
     name: 'RoomCreate',
-    props: ['datasend', 'changePage', 'changeToken', 'user', 'isAdmin', 'storage', 'userInfo'],
+    props: ['datasend', 'changePage', 'changeToken', 'user', 'isAdmin', 'PUBLIC', 'userInfo'],
     data() {
         return {
             name: null,
@@ -41,18 +41,20 @@ export default {
     methods: {
         createRoom() {
             let formdata = new FormData();
-            formdata.append('name', this.name);
-            formdata.append('description', this.description);
+            if (this.name) formdata.append('name', this.name);
+            if (this.description) formdata.append('description', this.description);
             if (this.$refs.fileInput && this.$refs.fileInput.files[0]) {
                 formdata.append('image', this.$refs.fileInput.files[0]);
             }
-            this.datasend('room/store', 'POST', formdata).then((result) => {
-                if (result.errors) {
-                    this.errors = result.errors;
-                } else {
-                    this.changePage('Dashboard');
-                }
-            });
+            this.datasend('room/store', 'POST', formdata)
+                .then((result) => {
+                    console.log(result);
+                    if (result.errors) {
+                        this.errors = result.errors;
+                    } else {
+                        this.changePage('Dashboard');
+                    }
+                });
         },
         logout() {
             this.$emit('logout');

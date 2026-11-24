@@ -14,27 +14,27 @@ class BookingController extends Controller
     {
         $room = Room::find($id);
 
-        return $room;
+        return response()->json(['room' => $room]);
     }
 
     public function booking_addform(BookingRequest $request)
     {
         $booking = new Booking;
-        $booking->user_id = Auth::user()->id;
+        $booking->user_id = Auth::id();
         $booking->room_id = $request->room_id;
         $booking->date = $request->date;
         $booking->payment = $request->payment;
         $booking->status = 'new';
         $booking->save();
 
-        return response()->json(['message' => 'Booking created']);
+        return response()->json(['id' => $booking->id]);
     }
 
     public function booking_admin()
     {
         $bookings = Booking::with('user', 'room')->get();
 
-        return $bookings;
+        return response()->json($bookings);
     }
 
     public function booking_update_status(Request $request, Booking $booking)
@@ -45,24 +45,24 @@ class BookingController extends Controller
         $booking->status = $request->status;
         $booking->save();
 
-        return response()->json(['message' => 'Status updated']);
+        return response()->json(['message' => 'ok']);
     }
 
     public function booking_list()
     {
-        $bookings = Booking::where('user_id', Auth::user()->id)->with('room')->get();
+        $bookings = Booking::where('user_id', Auth::id())->with('room')->get();
 
-        return $bookings;
+        return response()->json($bookings);
     }
 
     public function booking_review(Request $request, Booking $booking)
     {
-        if ($booking->user_id !== Auth::user()->id || $booking->status !== 'completed') {
+        if ($booking->user_id !== Auth::id() || $booking->status !== 'completed') {
             return response()->json(['errors' => ['access' => ['Доступ запрещен']]]);
         }
         $booking->comment = $request->comment;
         $booking->save();
 
-        return response()->json(['message' => 'Review added']);
+        return response()->json(['message' => 'ok']);
     }
 }

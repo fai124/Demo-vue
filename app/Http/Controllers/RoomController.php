@@ -22,7 +22,7 @@ class RoomController extends Controller
         }
         $room->save();
 
-        return response()->json(['message' => 'Room created']);
+        return response()->json(['id' => $room->id]);
     }
 
     public function room_delete(Room $room)
@@ -33,7 +33,7 @@ class RoomController extends Controller
         $room->name = 'зал удален';
         $room->save();
 
-        return response()->json(['message' => 'Room deleted']);
+        return response()->json(['message' => 'ok']);
     }
 
     public function room_edit(Room $room)
@@ -42,7 +42,7 @@ class RoomController extends Controller
             return response()->json(['errors' => ['role' => ['Доступ запрещен']]]);
         }
 
-        return $room;
+        return response()->json(['room' => $room]);
     }
 
     public function room_editform(RoomRequest $request, Room $room)
@@ -60,6 +60,6 @@ class RoomController extends Controller
         }
         $room->save();
 
-        return response()->json(['message' => 'Room updated']);
+        return response()->json(['id' => $room->id]);
     }
 }

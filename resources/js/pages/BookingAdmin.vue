@@ -54,7 +54,7 @@
 import HeaderComponent from '../components/HeaderComponent.vue';
 export default {
     name: 'BookingAdmin',
-    props: ['datasend', 'changePage', 'changeToken', 'user', 'isAdmin', 'storage', 'userInfo'],
+    props: ['datasend', 'changePage', 'changeToken', 'user', 'isAdmin', 'PUBLIC', 'userInfo'],
     data() {
         return {
             bookings: [],
@@ -71,10 +71,11 @@ export default {
         },
         updateStatus(booking) {
             let formdata = new FormData();
-            formdata.append('status', booking.status);
-            this.datasend('booking/' + booking.id + '/status', 'POST', formdata).then(() => {
-                this.getBookings();
-            });
+            if (booking.status) formdata.append('status', booking.status);
+            this.datasend('booking/' + booking.id + '/status', 'POST', formdata)
+                .then(() => {
+                    this.getBookings();
+                });
         },
         logout() {
             this.$emit('logout');
@@ -85,7 +86,7 @@ export default {
             const day = String(d.getDate()).padStart(2, '0');
             const month = String(d.getMonth() + 1).padStart(2, '0');
             const year = d.getFullYear();
-            return `${day}.${month}.${year}`;
+            return day + '.' + month + '.' + year;
         },
         formatStatus(status) {
             const map = { new: 'Новая', confirmed: 'Подтверждена', completed: 'Завершена' };

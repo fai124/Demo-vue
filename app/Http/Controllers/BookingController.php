@@ -39,9 +39,7 @@ class BookingController extends Controller
 
     public function booking_update_status(Request $request, Booking $booking)
     {
-        if (Auth::user()->role !== 'admin') {
-            return response()->json(['errors' => ['role' => ['Доступ запрещен']]]);
-        }
+
         $booking->status = $request->status;
         $booking->save();
 
@@ -57,9 +55,6 @@ class BookingController extends Controller
 
     public function booking_review(Request $request, Booking $booking)
     {
-        if ($booking->user_id !== Auth::id() || $booking->status !== 'completed') {
-            return response()->json(['errors' => ['access' => ['Доступ запрещен']]]);
-        }
         $booking->comment = $request->comment;
         $booking->save();
 

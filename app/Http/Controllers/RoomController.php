@@ -10,9 +10,6 @@ class RoomController extends Controller
 {
     public function room_addform(RoomRequest $request)
     {
-        if (Auth::user()->role !== 'admin') {
-            return response()->json(['errors' => ['role' => ['Доступ запрещен']]]);
-        }
         $room = new Room;
         $room->name = $request->name;
         $room->description = $request->description;
@@ -27,9 +24,6 @@ class RoomController extends Controller
 
     public function room_delete(Room $room)
     {
-        if (Auth::user()->role !== 'admin') {
-            return response()->json(['errors' => ['role' => ['Доступ запрещен']]]);
-        }
         $room->name = 'зал удален';
         $room->save();
 
@@ -38,18 +32,11 @@ class RoomController extends Controller
 
     public function room_edit(Room $room)
     {
-        if (Auth::user()->role !== 'admin') {
-            return response()->json(['errors' => ['role' => ['Доступ запрещен']]]);
-        }
-
-        return response()->json(['room' => $room]);
+        return response()->json($room);
     }
 
     public function room_editform(RoomRequest $request, Room $room)
     {
-        if (Auth::user()->role !== 'admin') {
-            return response()->json(['errors' => ['role' => ['Доступ запрещен']]]);
-        }
         $room->name = $request->name;
         $room->description = $request->description;
         if ($request->hasFile('image')) {

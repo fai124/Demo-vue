@@ -22,7 +22,7 @@
                 <h3>Залы</h3>
                 <div class="room-card" v-for="room in rooms" :key="room.id">
                     <a href="" class="room-link" @click.prevent="changePage('BookingRoom', room.id)">
-                        <img :src="PUBLIC + room.image" :alt="room.name" class="room-image" />
+                        <img :src="storage + room.image" :alt="room.name" class="room-image" />
                     </a>
                     <div class="room-info">
                         <a href="" class="room-link" @click.prevent="changePage('BookingRoom', room.id)">{{ room.name }}</a>
@@ -49,7 +49,8 @@
 import HeaderComponent from '../components/HeaderComponent.vue';
 export default {
     name: 'Dashboard',
-    props: ['datasend', 'changePage', 'changeToken', 'user', 'isAdmin', 'PUBLIC', 'userInfo'],
+    props: ['datasend', 'changePage', 'changeToken', 'user', 'isAdmin', 'storage', 'userInfo', 'logout'],
+    components: { HeaderComponent },
     data() {
         return {
             rooms: [],
@@ -73,10 +74,6 @@ export default {
                 });
             }
         },
-        logout() {
-            this.$emit('logout');
-        },
     },
-    components: { HeaderComponent },
 };
 </script>

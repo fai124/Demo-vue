@@ -35,7 +35,7 @@
 import HeaderComponent from '../components/HeaderComponent.vue';
 export default {
     name: 'BookingCreate',
-    props: ['datasend', 'changePage', 'changeToken', 'user', 'isAdmin', 'PUBLIC', 'userInfo'],
+    props: ['datasend', 'changePage', 'changeToken', 'user', 'isAdmin', 'storage', 'userInfo', 'logout'],
     data() {
         return {
             rooms: [],
@@ -45,6 +45,7 @@ export default {
             errors: {},
         };
     },
+    components: { HeaderComponent },
     mounted() {
         this.getRooms();
     },
@@ -69,10 +70,7 @@ export default {
                     }
                 });
         },
-        logout() {
-            this.$emit('logout');
-        },
+
     },
-    components: { HeaderComponent },
 };
 </script>

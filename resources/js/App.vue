@@ -1,33 +1,21 @@
 <template>
     <div id="wrapper">
-        <HeaderComponent
-            :userInfo="userInfo"
-            :changePage="changePage"
-        />
-
         <Login v-if="page == 'Login'" :datasend="datasend" :changePage="changePage" :changeToken="changeToken" />
         <Register v-if="page == 'Register'" :datasend="datasend" :changePage="changePage" :changeToken="changeToken" />
         <Dashboard v-if="page == 'Dashboard'" :datasend="datasend" :changePage="changePage" :changeToken="changeToken"
-            :logout="logout" :user="user" :isAdmin="isAdmin" :PUBLIC="PUBLIC" :userInfo="userInfo"
-            @logout="logout" />
+            :logout="logout" :user="user" :isAdmin="isAdmin" :storage="PUBLIC" :userInfo="userInfo" />
         <RoomCreate v-if="page == 'RoomCreate'" :datasend="datasend" :changePage="changePage" :changeToken="changeToken"
-            :logout="logout" :user="user" :isAdmin="isAdmin" :PUBLIC="PUBLIC" :userInfo="userInfo"
-            @logout="logout" />
+            :logout="logout" :user="user" :isAdmin="isAdmin" :storage="PUBLIC" :userInfo="userInfo" />
         <RoomEdit v-if="page == 'RoomEdit'" :datasend="datasend" :changePage="changePage" :changeToken="changeToken"
-            :logout="logout" :user="user" :isAdmin="isAdmin" :PUBLIC="PUBLIC" :pageId="pageId" :userInfo="userInfo"
-            @logout="logout" />
+            :logout="logout" :user="user" :isAdmin="isAdmin" :storage="PUBLIC" :pageId="pageId" :userInfo="userInfo" />
         <BookingCreate v-if="page == 'BookingCreate'" :datasend="datasend" :changePage="changePage" :changeToken="changeToken"
-            :logout="logout" :user="user" :isAdmin="isAdmin" :PUBLIC="PUBLIC" :userInfo="userInfo"
-            @logout="logout" />
+            :logout="logout" :user="user" :isAdmin="isAdmin" :storage="PUBLIC" :userInfo="userInfo" />
         <BookingRoom v-if="page == 'BookingRoom'" :datasend="datasend" :changePage="changePage" :changeToken="changeToken"
-            :logout="logout" :user="user" :isAdmin="isAdmin" :PUBLIC="PUBLIC" :pageId="pageId" :userInfo="userInfo"
-            @logout="logout" />
+            :logout="logout" :user="user" :isAdmin="isAdmin" :storage="PUBLIC" :pageId="pageId" :userInfo="userInfo" />
         <BookingMy v-if="page == 'BookingMy'" :datasend="datasend" :changePage="changePage" :changeToken="changeToken"
-            :logout="logout" :user="user" :isAdmin="isAdmin" :PUBLIC="PUBLIC" :userInfo="userInfo"
-            @logout="logout" />
+            :logout="logout" :user="user" :isAdmin="isAdmin" :storage="PUBLIC" :userInfo="userInfo" />
         <BookingAdmin v-if="page == 'BookingAdmin'" :datasend="datasend" :changePage="changePage" :changeToken="changeToken"
-            :logout="logout" :user="user" :isAdmin="isAdmin" :PUBLIC="PUBLIC" :userInfo="userInfo"
-            @logout="logout" />
+            :logout="logout" :user="user" :isAdmin="isAdmin" :storage="PUBLIC" :userInfo="userInfo" />
     </div>
 </template>
 
@@ -55,6 +43,17 @@ export default {
             userInfo: {},
         };
     },
+    components: {
+        Login,
+        Register,
+        Dashboard,
+        RoomCreate,
+        RoomEdit,
+        BookingCreate,
+        BookingRoom,
+        BookingMy,
+        BookingAdmin,
+    },
     mounted() {
         if (localStorage.getItem('token')) {
             this.getUser();
@@ -70,6 +69,8 @@ export default {
                         this.user = false;
                         this.isAdmin = false;
                         this.userInfo = {};
+                        this.page = 'Dashboard';
+                        this.pageId = null;
                         console.log(result);
                     }
                 })
@@ -138,17 +139,6 @@ export default {
             this.user = true;
             this.getUser();
         },
-    },
-    components: {
-        Login,
-        Register,
-        Dashboard,
-        RoomCreate,
-        RoomEdit,
-        BookingCreate,
-        BookingRoom,
-        BookingMy,
-        BookingAdmin,
     },
 };
 </script>

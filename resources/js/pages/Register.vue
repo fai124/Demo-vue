@@ -50,7 +50,6 @@ export default {
             number: null,
             email: null,
             errors: {},
-            loading: false,
         };
     },
     methods: {

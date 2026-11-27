@@ -7,7 +7,7 @@
         <div>
             <template v-if="user">
                 <span v-if="userInfo?.FIO">{{ userInfo.FIO }}</span>
-                <form @submit.prevent="logout" class="form-inline">
+                <form @submit.prevent="handleLogout" class="form-inline">
                     <button type="submit" class="btn-logout">Выйти</button>
                 </form>
             </template>
@@ -23,5 +23,10 @@
 export default {
     name: 'HeaderComponent',
     props: ['datasend', 'changeToken', 'user', 'isAdmin', 'logout', 'changePage', 'userInfo'],
+    methods: {
+        handleLogout() {
+            if (this.logout) this.logout();
+        },
+    },
 };
 </script>

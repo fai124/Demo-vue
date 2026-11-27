@@ -54,13 +54,14 @@
 import HeaderComponent from '../components/HeaderComponent.vue';
 export default {
     name: 'BookingMy',
-    props: ['datasend', 'changePage', 'changeToken', 'user', 'isAdmin', 'PUBLIC', 'userInfo'],
+    props: ['datasend', 'changePage', 'changeToken', 'user', 'isAdmin', 'storage', 'userInfo', 'logout'],
     data() {
         return {
             bookings: [],
             reviewText: '',
         };
     },
+    components: { HeaderComponent },
     mounted() {
         this.getBookings();
     },
@@ -79,9 +80,7 @@ export default {
                     this.getBookings();
                 });
         },
-        logout() {
-            this.$emit('logout');
-        },
+
         formatDate(dateStr) {
             if (!dateStr) return '';
             const d = new Date(dateStr);
@@ -91,6 +90,5 @@ export default {
             return day + '.' + month + '.' + year;
         },
     },
-    components: { HeaderComponent },
 };
 </script>

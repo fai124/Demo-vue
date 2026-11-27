@@ -5,7 +5,7 @@
         <div class="container">
             <div class="room-detail" v-if="room">
                 <h2>{{ room.name }}</h2>
-                <img :src="PUBLIC + room.image" :alt="room.name" class="room-detail-img" />
+                <img :src="storage + room.image" :alt="room.name" class="room-detail-img" />
                 <p>{{ room.description }}</p>
 
                 <form @submit.prevent="createBooking">
@@ -35,7 +35,7 @@
 import HeaderComponent from '../components/HeaderComponent.vue';
 export default {
     name: 'BookingRoom',
-    props: ['datasend', 'changePage', 'changeToken', 'user', 'isAdmin', 'storage', 'pageId', 'userInfo'],
+    props: ['datasend', 'changePage', 'changeToken', 'user', 'isAdmin', 'storage', 'pageId', 'userInfo', 'logout'],
     data() {
         return {
             room: null,
@@ -44,6 +44,7 @@ export default {
             errors: {},
         };
     },
+    components: { HeaderComponent },
     mounted() {
         this.getRoom();
     },
@@ -68,10 +69,7 @@ export default {
                     }
                 });
         },
-        logout() {
-            this.$emit('logout');
-        },
+
     },
-    components: { HeaderComponent },
 };
 </script>

@@ -21,12 +21,19 @@
                 <tbody>
                     <tr v-for="(booking, index) in bookings" :key="booking.id">
                         <td>{{ index + 1 }}</td>
+
                         <td>{{ booking.user.FIO }}</td>
+
                         <td>{{ booking.room.name }}</td>
+
                         <td>{{ formatDate(booking.date) }}</td>
+
                         <td>{{ booking.payment == 'cash' ? 'Наличные' : 'СБП' }}</td>
+
                         <td>{{ formatStatus(booking.status) }}</td>
+
                         <td>{{ booking.comment || '—' }}</td>
+
                         <td>
                             <form @submit.prevent="updateStatus(booking)" class="status-form">
                                 <select v-model="booking.status" class="status-select">
@@ -54,12 +61,13 @@
 import HeaderComponent from '../components/HeaderComponent.vue';
 export default {
     name: 'BookingAdmin',
-    props: ['datasend', 'changePage', 'changeToken', 'user', 'isAdmin', 'PUBLIC', 'userInfo'],
+    props: ['datasend', 'changePage', 'changeToken', 'user', 'isAdmin', 'storage', 'userInfo', 'logout'],
     data() {
         return {
             bookings: [],
         };
     },
+    components: { HeaderComponent },
     mounted() {
         this.getBookings();
     },
@@ -77,9 +85,7 @@ export default {
                     this.getBookings();
                 });
         },
-        logout() {
-            this.$emit('logout');
-        },
+
         formatDate(dateStr) {
             if (!dateStr) return '';
             const d = new Date(dateStr);
@@ -93,6 +99,5 @@ export default {
             return map[status] || status;
         },
     },
-    components: { HeaderComponent },
 };
 </script>

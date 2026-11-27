@@ -32,6 +32,7 @@ yarn-error.log
 /.claude
 /.codex
 /.cursor
+/.gigacode_vsc
 /.factory
 /.grok
 /.junie

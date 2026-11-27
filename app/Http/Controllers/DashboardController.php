@@ -10,6 +10,16 @@ class DashboardController extends Controller
     {
         $rooms = Room::all();
 
-        return response()->json($rooms);
+        return $rooms;
+    }
+
+    public function create()
+    {
+        //
+    }
+
+    public function edit(Room $room)
+    {
+        //
     }
 }

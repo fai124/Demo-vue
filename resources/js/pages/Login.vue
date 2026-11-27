@@ -35,7 +35,6 @@ export default {
             login: null,
             password: null,
             errors: {},
-            loading: false,
         };
     },
     methods: {

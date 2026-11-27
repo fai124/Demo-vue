@@ -5,7 +5,7 @@
         <div class="container">
             <div class="form-container">
                 <h2>Редактирование зала</h2>
-                <form @submit.prevent="editRoom" enctype="multipart/form-data">
+                <form @submit.prevent="editRoom">
                     <label for="name">Название зала</label>
                     <input type="text" name="name" id="name" v-model="name" />
                     <div class="error-message" v-if="errors.name">{{ errors.name.join('. ') }}</div>
@@ -34,7 +34,7 @@
 import HeaderComponent from '../components/HeaderComponent.vue';
 export default {
     name: 'RoomEdit',
-    props: ['datasend', 'changePage', 'changeToken', 'user', 'isAdmin', 'PUBLIC', 'pageId', 'userInfo'],
+    props: ['datasend', 'changePage', 'changeToken', 'user', 'isAdmin', 'storage', 'pageId', 'userInfo', 'logout'],
     data() {
         return {
             room: null,
@@ -43,6 +43,7 @@ export default {
             errors: {},
         };
     },
+    components: { HeaderComponent },
     mounted() {
         this.getRoom();
     },
@@ -72,10 +73,7 @@ export default {
                     }
                 });
         },
-        logout() {
-            this.$emit('logout');
-        },
+
     },
-    components: { HeaderComponent },
 };
 </script>

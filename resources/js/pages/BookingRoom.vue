@@ -5,11 +5,16 @@
         <div class="container">
             <div class="room-detail" v-if="room">
                 <h2>{{ room.name }}</h2>
-                <img :src="storage + room.image" :alt="room.name" class="room-detail-img" />
+                <img :src="storage + room.image" :alt="room.name" class="room-image" />
+                <br>
                 <p>{{ room.description }}</p>
 
                 <form @submit.prevent="createBooking">
                     <input type="hidden" name="room_id" :value="room.id" />
+
+                    <label>Мероприятие</label>
+                    <textarea name="event" id="event" placeholder="Мероприятие" v-model="event"></textarea>
+                    <div class="error-message" v-if="errors.$event">{{ errors.event.join('. ') }}</div>
 
                     <label for="date">Дата</label>
                     <input type="date" name="date" id="date" v-model="date" />
@@ -38,6 +43,7 @@ export default {
     props: ['datasend', 'changePage', 'changeToken', 'user', 'isAdmin', 'storage', 'pageId', 'userInfo', 'logout'],
     data() {
         return {
+            event: null,
             room: null,
             date: null,
             payment: 'cash',
@@ -57,6 +63,7 @@ export default {
         createBooking() {
             let formdata = new FormData();
             if (this.room) formdata.append('room_id', this.room.id);
+            if (this.event) formdata.append('event', this.event);
             if (this.date) formdata.append('date', this.date);
             if (this.payment) formdata.append('payment', this.payment);
             this.datasend('booking/store', 'POST', formdata)

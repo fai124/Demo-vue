@@ -10,6 +10,7 @@
                     <tr>
                         <th>№</th>
                         <th>Зал</th>
+                        <th>Мероприятие</th>
                         <th>Дата</th>
                         <th>Оплата</th>
                         <th>Статус</th>
@@ -20,6 +21,7 @@
                     <tr v-for="(booking, index) in bookings" :key="booking.id">
                         <td>{{ index + 1 }}</td>
                         <td>{{ booking.room.name }}</td>
+                        <td>{{ booking.event }}</td>
                         <td>{{ formatDate(booking.date) }}</td>
                         <td>{{ booking.payment == 'cash' ? 'Наличные' : 'СБП' }}</td>
                         <td>{{ booking.status }}</td>

@@ -21,17 +21,10 @@ class RoomRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
+        return  [
             'name' => 'required',
             'description' => 'required',
+            'image' => 'required|nullable',
         ];
-
-        if ($this->isMethod('post') && $this->route('room')) {
-            $rules['image'] = 'nullable|image';
-        } else {
-            $rules['image'] = 'required|image';
-        }
-
-        return $rules;
     }
 }

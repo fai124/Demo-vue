@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RoomRequest;
 use App\Models\Room;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\RoomRequest;
+use App\Http\Requests\UpdateRoomRequest;
 
 class RoomController extends Controller
 {
@@ -35,15 +36,12 @@ class RoomController extends Controller
         return $room;
     }
 
-    public function room_editform(RoomRequest $request, Room $room)
+    public function room_editform(UpdateRoomRequest $request, Room $room)
     {
         $room->name = $request->name;
         $room->description = $request->description;
         if ($request->hasFile('image')) {
-            $room->image = Storage::disk('public')->putFile('rooms', $request->file('image'));
-        } elseif ($request->input('old_image')) {
-            $room->image = $request->input('old_image');
-        }
+        $room->image = Storage::disk('public')->putFile('rooms', $request->file('image'));}
         $room->save();
 
         return ['id' => $room->id];

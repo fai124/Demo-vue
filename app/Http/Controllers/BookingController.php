@@ -12,9 +12,7 @@ class BookingController extends Controller
 {
     public function booking_room($id)
     {
-        $room = Room::find($id);
-
-        return ['room' => $room];
+        return Room::find($id);
     }
 
     public function booking_addform(BookingRequest $request)
@@ -22,6 +20,7 @@ class BookingController extends Controller
         $booking = new Booking();
         $booking->user_id = Auth::id();
         $booking->room_id = $request->room_id;
+        $booking->event = $request->event;
         $booking->date = $request->date;
         $booking->payment = $request->payment;
         $booking->status = 'new';

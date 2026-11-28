@@ -11,6 +11,7 @@
                         <th>№</th>
                         <th>Пользователь</th>
                         <th>Зал</th>
+                        <th>Мероприятие</th>
                         <th>Дата</th>
                         <th>Оплата</th>
                         <th>Статус</th>
@@ -21,17 +22,12 @@
                 <tbody>
                     <tr v-for="(booking, index) in bookings" :key="booking.id">
                         <td>{{ index + 1 }}</td>
-
                         <td>{{ booking.user.FIO }}</td>
-
                         <td>{{ booking.room.name }}</td>
-
+                        <td>{{ booking.event }}</td>
                         <td>{{ formatDate(booking.date) }}</td>
-
                         <td>{{ booking.payment == 'cash' ? 'Наличные' : 'СБП' }}</td>
-
                         <td>{{ formatStatus(booking.status) }}</td>
-
                         <td>{{ booking.comment || '—' }}</td>
 
                         <td>

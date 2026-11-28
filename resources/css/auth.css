@@ -23,6 +23,12 @@ body {
     text-decoration: none;
 }
 
+.photo {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
 .form-container {
     max-width: 500px;
     margin: 50px auto;

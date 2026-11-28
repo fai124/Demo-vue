@@ -23,6 +23,7 @@ class BookingRequest extends FormRequest
     {
         return [
             'room_id' => 'required|exists:rooms,id',
+            'event' => 'required',
             'date' => 'required|date|after_or_equal:today',
             'payment' => 'required|in:cash,sbp',
         ];
